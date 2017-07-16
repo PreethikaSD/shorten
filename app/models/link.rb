@@ -1,6 +1,7 @@
 class Link < ApplicationRecord
 	has_many :user_links
 	has_many :users, :through => :user_links
+    validates_presence_of :long_link
 
 	def self.get_short
 		numbers = (1..9).to_a
