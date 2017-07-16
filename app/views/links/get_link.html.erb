@@ -1,0 +1,46 @@
+<div class="container">
+  <h1 style="text-align:center">Shorten your Link Here!</h1>
+  <br>
+  <br>
+  <form>
+    <div class="form-group row">
+      <div class="col-md-4"></div>
+      <div class="col-md-4" action="/">
+        <input class="form-control text-field" type="text" placeholder="Name" name="username">
+      </div>
+      <div class="col-md-4"></div>
+    </div>
+   
+    <div class="form-group row">
+      <div class="col-md-4"></div>
+      <div class="col-md-4">
+        <input class="form-control" type="url" placeholder="Enter the link" name="long_link">
+      </div>
+      <div class="col-md-4"></div>
+    </div>
+    <div class="form-group row">
+      <div class="col-md-4"></div>
+      <div class="col-md-4">
+        <button type="submit" class="form-control btn btn-primary">Submit</button>
+      </div>
+      <div class="col-md-4"></div>
+    </div>
+  </form>
+  <div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+  <p>
+  <%if @message%>
+    <%= @message %>
+  <%elsif @short_link%>
+    Shortened link for <%=@short_link.long_link%> is <a href=<%=@short_link.short_link%>><%=@short_link.short_link%></a>  
+  <%else%>
+    Enter a link to shorten it
+  <% end %>
+  </p>
+  </div>
+  <div class="col-md-4"></div>
+
+</div>
+
+
