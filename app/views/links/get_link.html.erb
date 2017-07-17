@@ -33,7 +33,7 @@
   <%if @message%>
     <%= @message %>
   <%elsif @short_link%>
-    Shortened link for <%=@short_link.long_link%> is <a href=<%=@short_link.short_link%>><%=@short_link.short_link%></a>  
+    Shortened link for <%=@short_link.long_link%> is <%=@short_link.short_link%>
   <%else%>
     Enter a link to shorten it
   <% end %>

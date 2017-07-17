@@ -12,13 +12,12 @@ class LinksController < ApplicationController
   		link = Link.find_by(short_link: short_url)
   		if link
   			given_link = link.long_link
-  			redirect_to "#{given_link}"
-			link.count +=1
+  			link.count +=1
 			link.save
+  			redirect_to "#{given_link}"
   		else
   			render json: "Not found"
   		end
-
 	end
 
 	def get_link
@@ -27,7 +26,33 @@ class LinksController < ApplicationController
 		if input_link
 			@short_link = shorten_link_web(input_link, input_name)
 		end
+	end
 
+	def link_statistics
+		#count number of times a link is shortened
+		@total_links_shortened = Link.count
+
+		#count number of times particular link is accessed
+		@short_link = params[:short_link]
+		@link = Link.find_by(short_link: @short_link)
+	end
+
+
+	def user_statistics
+		user_name = params[:username]		 	
+		if user_name.present?
+			@user = User.find_by(username: user_name)
+			if @user 
+				@user_links = UserLink.where(user_id: @user.id)	
+				@link_count = @user_links.count
+				if @user_links.present?
+					@links = []
+					@user_links.each do |user_link|
+						@links << Link.find(user_link.link_id)
+					end
+				end
+			end
+		end	
 	end
 
 	private
@@ -65,7 +90,6 @@ class LinksController < ApplicationController
 		    find_user = User.find_by(username: ip_name)
 
 		    if find_link
-		    	#@short_link = "The shortened link previously created is #{find_link.short_link}"
 		    	@short_link = find_link
 		    else
 		    	short_link = "http://localhost:3000/"+Link.get_short
@@ -89,36 +113,4 @@ class LinksController < ApplicationController
 		    end	
 		end  
 	end	 
-
-
-
-	# 	    if UserLink.find_by(link_id: find_link.id).user_id == find_user.id
-	# 	    	@message = "The shortened link previously created is #{find_link.shortened_link}"
-	# 	    elsif find_link and !find_user
-	# 	    	@user = User.create(username: ip_name)
-	# 	    	UserLink.create(user_id: @user.id, link_id: find_link.id) 	
-	# 	    else
-	# 	    	short_link = "http://localhost:3000/"+Link.shorten
-	# 	    	if find_user
-
-	# 	    	given_link = ip_link
-	# 	    	shortened_link = short_link
-	# 	    	@link = Link.new
-	# 	    	@link.shortened_link = short_link
-	# 	    	@link.given_link =ip_link
-	# 	    	@link.username =ip_name
-
-	# 	    	# if @link.save
-	# 	    	# else
-	# 	    	# 	@mesage = "Please try again"
-	# 	    	# end	
-	# 	    end
-	# 	    if @link.save
-	# 	    else
-	# 	    	@message = "Please try again"
-	# 	    end
-	# 	end
-	# 	@message
-	# end
-
 end
