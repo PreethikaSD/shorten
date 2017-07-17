@@ -1,24 +1,11 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+To use API to get the shortened link here is an example:
 
-Things you may want to cover:
+curl -H "Content-Type: application/json" -d '{"link": {"long_link": "https://www.google.com.sg"}}' -X POST http://localhost:3000 -i 
 
-* Ruby version
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Assumptions: 
+* A link will be shortened once. If link has already been shortened, the same will be returned back.
+* Through API, the params to be sent are long link.
+* In web, the params needed to shorten link are username and long link.
